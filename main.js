@@ -43,26 +43,30 @@ function WriteToFile(passForm) {
       //
       alert ("Ooops: " + error);
    });
-
-/*
-
-   db.friends.get({
-       name: "Ronny"
-   }).then(function (friend) {
-       alter(friend.name);
-   });
-   */
- };
-       /*
-   }).catch(function(error) {
-             //
-             // Finally don't forget to catch any error
-             // that could have happened anywhere in the
-             // code blocks above.
-             //
-             alert ("Ooops: " + error)};*/
-
+ }
 
 function NewData(){
-  alert("Test");
-};
+  db.open().then (function(){
+      //
+      // Then when data is stored, read from it
+      //
+      return db.friends.toArray();
+  }).then(function (people) {
+      //
+      // Display the result
+      //
+      for (var i=0; i<people.length; ++i) {
+
+        console.log(`${people[i].name} ${people[i].lname}`);
+      }
+
+  }).catch(function(error) {
+     //
+     // Finally don't forget to catch any error
+     // that could have happened anywhere in the
+     // code blocks above.
+     //
+     alert ("Ooops: " + error);
+  });
+
+}
