@@ -46,19 +46,43 @@ function WriteToFile(passForm) {
  }
 
 function NewData(){
+
   db.open().then (function(){
       //
       // Then when data is stored, read from it
       //
       return db.friends.toArray();
   }).then(function (people) {
+      //var data = new Array;
       //
       // Display the result
       //
-      for (var i=0; i<people.length; ++i) {
+      //save("anmelder.txt",people)
+      //downloadCSV(people);
+      var data = new Array();
+      /*
+      var data2 = [
+         ['Foo', 'programmer'],
+         ['Bar', 'bus driver'],
+         ['Moo', 'Reindeer Hunter']
+      ];*/
 
-        console.log(`${people[i].name} ${people[i].lname}`);
+      var data2 = [['Foo', 'programmer']];
+      data2.push(['Bar', 'bus driver']);
+      for (var i=0; i<people.length; i++) {
+
+        var logi = i;
+        //data.push([i],people[i].name);
+        //data.push([people[i].name][people[i].lname]);
+        data.push([people[i].name,people[i].lname]);
+        //data[i][1]=people[i].lname;
+        //console.log(`${people[i].name} ${people[i].lname}`);
+        //console.log(logi + people[i].name + " " + people[i].lname);
+        console.log(logi);
+
       }
+
+      download_csv(data);
 
   }).catch(function(error) {
      //
@@ -70,3 +94,19 @@ function NewData(){
   });
 
 }
+
+    function download_csv(data) {
+
+    var csv = 'Name,Title\n';
+    data.forEach(function(row) {
+            csv += row.join(',');
+            csv += "\n";
+    });
+
+    console.log(csv);
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'people.csv';
+    hiddenElement.click();
+    }
