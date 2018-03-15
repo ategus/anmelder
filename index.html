@@ -3,42 +3,79 @@
 <head>
 <title>Amateurfunk Anmelder</title>
 <link rel="stylesheet" type="text/css" href="main.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <script src="dexie.js"></script>
 <script src="main.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!--<script src="jquery.morse.js"></script>
+<script src="morse.js"></script>-->
+
+
 </head>
-<body>
+<body style="font-size:14px">
 
-<h1>Amateurfunk</h1>
-<p>Anmelder</p>
-<label for="sfname">Vorname</label>
-<input type="text" id="sfname" name="sfirstname" placeholder="Suche..">
-<button onclick="ShowData()">Show Data</button>
-<button onclick="NewData()">New Data</button>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <h1 class="text-center">Amateurfunk</h1>
+      <p class="text-center">Anmelder</p>
 
-<div>
+      <script>
+      <!--$("p").morseCode({bpm:1});-->
+      </script>
+
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
   <form onSubmit="WriteToFile(this)">
-    <label for="fname">Vorname</label>
+    <!--<label for="fname">Vorname</label>-->
     <input type="text" id="fname" name="firstname" placeholder="Dein Name..">
 
-    <label for="lname">Nachname</label>
+    <!--<label for="lname">Nachname</label>-->
     <input type="text" id="lname" name="lastname" placeholder="Dein Nachname..">
 
-    <label for="lemail">Email</label>
+    <!--<label for="lemail">Email</label>-->
     <input type="text" id="email" name="email" placeholder="Deine Email..">
 
-    <label for="country">Country</label>
-    <!--
-    <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select>-->
-
-    <input type="submit" value="submit">
+    <br><br>
+    <input type="submit" value="submit" class="btn btn-block btn-primary">
   </form>
-
+  <br>
+  <button onclick="CsvData()" class="btn btn-block btn-info">csv download</button>
+<p>
+  <input type="text" id="morse" name="morse" placeholder="Dein Name..">
+  <button id="play" class="btn btn-block btn-info">Morse</button>
+<p>
 
 </div>
-<button onclick="download_csv()">Download CSV</button> 
+<div class="col-sm-2"></div>
+</div>
+<script type="text/javascript">
+
+
+var ac = new (window.AudioContext || window.webkitAudioContext)();
+
+var morse = new MorseNode(ac);
+morse.connect(ac.destination);
+
+var txt = document.querySelector("#morse");
+var btn = document.querySelector("#play");
+
+btn.onclick = function() {
+    morse.playString(ac.currentTime, txt.value);
+}
+txt.onkeypress = function(e) {
+    if(e.keyCode == 13)
+        btn.click();
+}
+</script>
+</div>
 </body>
 </html>
