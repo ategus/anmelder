@@ -50,21 +50,15 @@ function CsvData(){
   db.open().then (function(){
       //
       // Then when data is stored, read from it
-      //
+      console.log("db_open");
       return db.friends.toArray();
   }).then(function (people) {
-      //var data = new Array;
-      //
-      // Display the result
-      //
-      //save("anmelder.txt",people)
-      //downloadCSV(people);
       var data = new Array();
 
       for (var i=0; i<people.length; i++) {
         data.push([people[i].name,people[i].lname,people[i].email]);
       }
-
+      console.log(data);
       download_csv(data);
 
   }).catch(function(error) {
